@@ -1,7 +1,5 @@
 # AWS Lambda NestJs Boilerplate
 
-## Description
-
 Boilerplate code for using NestJs with AWS Lambda
 
 ## Installation
