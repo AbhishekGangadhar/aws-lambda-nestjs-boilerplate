@@ -1,15 +1,26 @@
 # FROM amazon/aws-lambda-nodejs:12
 FROM public.ecr.aws/lambda/nodejs:14
 
+RUN yum update && \
+    yum install -y \
+    g++ \
+    make \
+    gzip \
+    cmake \
+    unzip \
+    libcurl4-openssl-dev \
+    tar
+
 ENV TEMP_DIR=/tmp/.lambdas/test
 
 RUN mkdir -p $TEMP_DIR
 
 WORKDIR ${TEMP_DIR}
 
-COPY package.json ./
+COPY package*.json ./
 
-RUN npm install
+RUN mkdir node_modules
+RUN npm ci --only=development
 
 # RUN mkdir deploy
 COPY . .
