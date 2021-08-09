@@ -7,13 +7,14 @@ ARG TEMP_DIR=~/.lambdas/$PROJECT_NAME/
 RUN mkdir -p $TEMP_DIR
 
 
-RUN cd $TEMP_DIR
 
-COPY package.json ./
+COPY package.json $TEMP_DIR/
+
+RUN cd $TEMP_DIR
 RUN npm install
 
 # RUN mkdir deploy
-COPY . .
+COPY . $TEMP_DIR/
 RUN npm run build
 RUN npm prune --production
 # RUN zip -r $PROJECT_PATH/nest-lambda.zip . ../node_modules
