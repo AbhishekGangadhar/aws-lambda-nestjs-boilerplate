@@ -19,7 +19,7 @@ CMD npm prune --production
 RUN npm cache clean --force 
 
 COPY ./dist/. ${LAMBDA_TASK_ROOT}/.
-COPY ../node_modules ${LAMBDA_TASK_ROOT}/.
+COPY ./node_modules ${LAMBDA_TASK_ROOT}/.
 
 CMD [ "ls" "-ltr"]
 
