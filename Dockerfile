@@ -1,14 +1,30 @@
 # FROM amazon/aws-lambda-nodejs:12
 FROM public.ecr.aws/lambda/nodejs:14
 
-COPY dist/. ${LAMBDA_TASK_ROOT}/
+ARG PROJECT_PATH=`pwd`
+ARG PROJECT_NAME=`basename "$PROJECT_PATH"`
+ARG TEMP_DIR=~/.lambdas/$PROJECT_NAME/
 
-COPY  package*.json ${LAMBDA_TASK_ROOT}/
+CMD mkdir -p $TEMP_DIR
 
-RUN mkdir -p ${LAMBDA_TASK_ROOT}/node_modules
+COPY . $TEMP_DIR/.
 
-RUN npm ci --only=development
+CMD cd $TEMP_DIR
+CMD mkdir deploy
+CMD npm install
+CMD npm run build
+CMD npm prune --production
+# CMD zip -r $PROJECT_PATH/nest-lambda.zip . ../node_modules
 
 RUN npm cache clean --force
+
+COPY ./dist/. ${LAMBDA_TASK_ROOT}/.
+COPY ../node_modules ${LAMBDA_TASK_ROOT}/.
+
+CMD [ "ls" "-ltr"]
+
+CMD [ "cd" "${LAMBDA_TASK_ROOT}"]
+
+CMD [ "ls" "-ltr"]
 
 CMD [ "index.handler" ]
