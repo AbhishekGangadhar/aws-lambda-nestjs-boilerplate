@@ -16,7 +16,7 @@ CMD npm run build
 CMD npm prune --production
 # CMD zip -r $PROJECT_PATH/nest-lambda.zip . ../node_modules
 
-RUN npm cache clean --force
+RUN npm cache clean --force 
 
 COPY ./dist/. ${LAMBDA_TASK_ROOT}/.
 COPY ../node_modules ${LAMBDA_TASK_ROOT}/.
