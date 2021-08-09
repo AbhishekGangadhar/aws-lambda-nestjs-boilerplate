@@ -12,7 +12,7 @@ COPY package.json ./
 RUN npm install
 
 # RUN mkdir deploy
-COPY . $TEMP_DIR/
+COPY . .
 RUN npm run build
 # RUN npm prune --production # uncomment for production
 # RUN zip -r $PROJECT_PATH/nest-lambda.zip . ../node_modules
