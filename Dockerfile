@@ -4,31 +4,33 @@ FROM public.ecr.aws/lambda/nodejs:14
 ARG PROJECT_NAME=test
 ARG TEMP_DIR=~/.lambdas/$PROJECT_NAME/
 
-CMD mkdir -p $TEMP_DIR
+RUN mkdir -p $TEMP_DIR
 
 
-CMD cd $TEMP_DIR
+RUN cd $TEMP_DIR
 
 COPY package.json ./
-CMD npm install
+RUN npm install
 
-CMD mkdir deploy
-COPY . $TEMP_DIR/.
-CMD npm run build
-CMD npm prune --production
-# CMD zip -r $PROJECT_PATH/nest-lambda.zip . ../node_modules
+# RUN mkdir deploy
+COPY . .
+RUN npm run build
+RUN npm prune --production
+# RUN zip -r $PROJECT_PATH/nest-lambda.zip . ../node_modules
 
 RUN npm cache clean --force 
 
-CMD cp -r ./dist/* ${LAMBDA_TASK_ROOT}/
-CMD cp -r ./node_modules ${LAMBDA_TASK_ROOT}/
+RUN cp -r ./dist/* ${LAMBDA_TASK_ROOT}/
+RUN cp -r ./node_modules ${LAMBDA_TASK_ROOT}/
 
-CMD [ "ls" "-ltr"]
+RUN [ "ls" "-ltr"]
 
-CMD [ "cd" "${LAMBDA_TASK_ROOT}"]
+RUN [ "cd" "${LAMBDA_TASK_ROOT}"]
 
-CMD [ "ls" "-ltr"]
+RUN [ "ls" "-ltr"]
 
 WORKDIR ${LAMBDA_TASK_ROOT}
+
+RUN cd ${LAMBDA_TASK_ROOT}
 
 CMD [ "index.handler" ]
