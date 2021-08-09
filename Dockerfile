@@ -29,8 +29,6 @@ RUN [ "cd" "${LAMBDA_TASK_ROOT}"]
 
 RUN [ "ls" "-ltr"]
 
-WORKDIR ${LAMBDA_TASK_ROOT}
-
 RUN cd ${LAMBDA_TASK_ROOT}
 
 CMD [ "index.handler" ]
