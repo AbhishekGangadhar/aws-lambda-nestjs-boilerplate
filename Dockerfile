@@ -14,12 +14,12 @@ RUN npm install
 # RUN mkdir deploy
 COPY . $TEMP_DIR/
 RUN npm run build
-RUN npm prune --production
+# RUN npm prune --production # uncomment for production
 # RUN zip -r $PROJECT_PATH/nest-lambda.zip . ../node_modules
 RUN ls -ltr
 
-RUN cp -r ./dist/. ${LAMBDA_TASK_ROOT}/
-RUN cp -r ./node_modules ${LAMBDA_TASK_ROOT}/
+RUN cp -r $TEMP_DIR/dist/. ${LAMBDA_TASK_ROOT}/
+RUN cp -r $TEMP_DIR/node_modules ${LAMBDA_TASK_ROOT}/
 
 RUN npm cache clean --force 
 
