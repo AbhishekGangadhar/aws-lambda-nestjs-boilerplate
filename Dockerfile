@@ -1,7 +1,7 @@
 # FROM amazon/aws-lambda-nodejs:12
 FROM public.ecr.aws/lambda/nodejs:14
 
-ENV TEMP_DIR=~/.lambdas/test
+ENV TEMP_DIR=/tmp/.lambdas/test
 
 RUN mkdir -p $TEMP_DIR
 
